@@ -9,12 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 快速开始：生产者
  */
 @Slf4j
 public class Procuder {
 
+	private static final Logger log = LoggerFactory.getLogger(Procuder.class);
+	
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost(RabbitMQConfig.RABBITMQ_HOST);
