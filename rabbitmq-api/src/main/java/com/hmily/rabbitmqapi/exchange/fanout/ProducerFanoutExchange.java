@@ -1,6 +1,6 @@
 package com.hmily.rabbitmqapi.exchange.fanout;
 
-import com.hmily.rabbitmqapi.common.RabbitMQConfig;
+import com.hmily.rabbitmqapi.common.RabbitMQCommon;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -16,9 +16,9 @@ public class ProducerFanoutExchange {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(RabbitMQConfig.RABBITMQ_HOST);
-        connectionFactory.setPort(RabbitMQConfig.RABBITMQ_PORT);
-        connectionFactory.setVirtualHost(RabbitMQConfig.RABBITMQ_DEFAULT_VIRTUAL_HOST);
+        connectionFactory.setHost(RabbitMQCommon.RABBITMQ_HOST);
+        connectionFactory.setPort(RabbitMQCommon.RABBITMQ_PORT);
+        connectionFactory.setVirtualHost(RabbitMQCommon.RABBITMQ_DEFAULT_VIRTUAL_HOST);
         // 2 创建Connection
         Connection connection = connectionFactory.newConnection();
         // 3 创建Channel

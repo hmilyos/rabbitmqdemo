@@ -1,6 +1,6 @@
 package com.hmily.rabbitmqapi.returnlistener;
 
-import com.hmily.rabbitmqapi.common.RabbitMQConfig;
+import com.hmily.rabbitmqapi.common.RabbitMQCommon;
 import com.rabbitmq.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +18,9 @@ public class Procuder {
     public static void main(String[] args) throws IOException, TimeoutException {
         //1 创建ConnectionFactory
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(RabbitMQConfig.RABBITMQ_HOST);
-        connectionFactory.setPort(RabbitMQConfig.RABBITMQ_PORT);
-        connectionFactory.setVirtualHost(RabbitMQConfig.RABBITMQ_DEFAULT_VIRTUAL_HOST);
+        connectionFactory.setHost(RabbitMQCommon.RABBITMQ_HOST);
+        connectionFactory.setPort(RabbitMQCommon.RABBITMQ_PORT);
+        connectionFactory.setVirtualHost(RabbitMQCommon.RABBITMQ_DEFAULT_VIRTUAL_HOST);
         //2 获取C	onnection
         Connection connection = connectionFactory.newConnection();
         //3 通过Connection创建一个新的Channel

@@ -1,6 +1,6 @@
 package com.hmily.rabbitmqapi.confirm;
 
-import com.hmily.rabbitmqapi.common.RabbitMQConfig;
+import com.hmily.rabbitmqapi.common.RabbitMQCommon;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -28,9 +28,9 @@ public class Consumer {
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         //1 创建ConnectionFactory
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(RabbitMQConfig.RABBITMQ_HOST);
-        connectionFactory.setPort(RabbitMQConfig.RABBITMQ_PORT);
-        connectionFactory.setVirtualHost(RabbitMQConfig.RABBITMQ_DEFAULT_VIRTUAL_HOST);
+        connectionFactory.setHost(RabbitMQCommon.RABBITMQ_HOST);
+        connectionFactory.setPort(RabbitMQCommon.RABBITMQ_PORT);
+        connectionFactory.setVirtualHost(RabbitMQCommon.RABBITMQ_DEFAULT_VIRTUAL_HOST);
         //2 获取C	onnection
         Connection connection = connectionFactory.newConnection();
         //3 通过Connection创建一个新的Channel
