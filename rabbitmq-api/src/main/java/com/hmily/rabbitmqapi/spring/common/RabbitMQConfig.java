@@ -1,25 +1,31 @@
 package com.hmily.rabbitmqapi.spring.common;
 
 
-import org.springframework.amqp.core.TopicExchange;
+import com.rabbitmq.client.Channel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.ConsumerTagStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.hmily.rabbitmqapi.common.RabbitMQCommon;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
+import java.util.UUID;
 
 
 @Configuration
 @ComponentScan({"com.hmily.rabbitmqapi.spring.*"})
 public class RabbitMQConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(RabbitMQConfig.class);
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -94,4 +100,36 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(queue003()).to(exchange001()).with("mq.*");
     }
 
+    @Bean //connectionFactory 也是要和最上面方法名保持一致
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        return rabbitTemplate;
+    }
+
+    @Bean   //connectionFactory 也是要和最上面方法名保持一致
+    public SimpleMessageListenerContainer messageContainer(ConnectionFactory connectionFactory) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
+        container.setQueues(queue001(), queue002(), queue003());    //监听的队列
+        container.setConcurrentConsumers(1);    //当前的消费者数量
+        container.setMaxConcurrentConsumers(5); //  最大的消费者数量
+        container.setDefaultRequeueRejected(false); //是否重回队列
+        container.setAcknowledgeMode(AcknowledgeMode.AUTO); //签收模式
+        container.setExposeListenerChannel(true);
+        container.setConsumerTagStrategy(new ConsumerTagStrategy() {    //消费端的标签策略
+            @Override
+            public String createConsumerTag(String queue) {
+                return queue + "_" + UUID.randomUUID().toString();
+            }
+        });
+
+
+        container.setMessageListener(new ChannelAwareMessageListener() {
+            @Override
+            public void onMessage(Message message, Channel channel) throws Exception {
+                String msg = new String(message.getBody());
+                log.info("----------消费者: " + msg);
+            }
+        });
+        return container;
+    }
 }
