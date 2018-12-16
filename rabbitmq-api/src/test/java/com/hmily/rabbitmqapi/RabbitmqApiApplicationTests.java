@@ -64,6 +64,7 @@ public class RabbitmqApiApplicationTests {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+
     @Test
     public void testSendMessage() throws Exception {
         //1 创建消息
