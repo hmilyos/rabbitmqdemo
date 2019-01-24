@@ -74,7 +74,7 @@ public class RabbitmqApiApplicationTests {
         Message message = new Message("Hello RabbitMQ".getBytes(), messageProperties);
 
         rabbitTemplate.convertAndSend("topic001", "spring.amqp", message, new MessagePostProcessor() {
-            @Override
+            @Override  // message 就是上面声明要发送的消息
             public Message postProcessMessage(Message message) throws AmqpException {
                 log.info("------添加额外的设置---------");
                 message.getMessageProperties().getHeaders().put("desc", "额外修改的信息描述");
