@@ -141,7 +141,7 @@ public class RabbitmqApiApplicationTests {
         //这里注意一定要修改contentType为 application/json
         messageProperties.setContentType("application/json");
         //注意这里要写你的实体类路径
-        messageProperties.getHeaders().put("__TypeId__", "com.hmily.rabbitmqspringdemo.domain.Order");
+        messageProperties.getHeaders().put("__TypeId__", "com.hmily.rabbitmqapi.spring.domain.Order");
         Message message = new Message(json.getBytes(), messageProperties);
 
         rabbitTemplate.send("topic001", "spring.order", message);

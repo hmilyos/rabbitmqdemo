@@ -1,5 +1,6 @@
 package com.hmily.rabbitmqspringbootconsumer.conusmer;
 
+import com.hmily.rabbitmqspringbootproduct.domain.Order;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.*;
@@ -59,7 +60,7 @@ public class RabbitReceiver {
     )
     )
     @RabbitHandler
-    public void onOrderMessage(@Payload com.hmily.rabbitmqspringbootproduct.domain.Order order,
+    public void onOrderMessage(@Payload Order order,
                                Channel channel,
                                @Headers Map<String, Object> headers) throws Exception {
         log.info("--------------------------------------");
