@@ -21,7 +21,7 @@ public class Consumer {
 	public static final String EXCHANGE_NAME = "test_qos_exchange";
 	public static final String EXCHANGE_TYPE = "topic";
 	public static final String ROUTING_KEY_TYPE = "qos.#";
-	public static final String ROUTING_KEY = "cqos.save";
+	public static final String ROUTING_KEY = "qos.save";
 	public static final String QUEUE_NAME = "test_qos_queue";
 	
 	public static void main(String[] args) throws IOException, TimeoutException {
