@@ -50,5 +50,7 @@ public class Procuder {
                 log.info("deliveryTag: {}, multiple: {}", deliveryTag, multiple);
             }
         });
+        channel.close();
+        connection.close();
     }
 }

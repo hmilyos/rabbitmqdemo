@@ -30,7 +30,8 @@ public class ProducerDirectExchange {
 		channel.basicPublish(ConsumerDirectExchange.EXCHANGE_NAME, ConsumerDirectExchange.ROUTING_KEY, null, msg.getBytes());
 
 		//		channel.basicPublish(ConsumerDirectExchange.EXCHANGE_NAME, ConsumerDirectExchange.ROUTING_KEY_ERROR, null, msg.getBytes());
-		
+		channel.close();
+		connection.close();
 	}
 	
 }

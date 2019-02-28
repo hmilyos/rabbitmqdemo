@@ -37,6 +37,8 @@ public class Procuder {
             log.info("生产端发送：{}", msg);
             channel.basicPublish(exchange, routingKey, true, properties, msg.getBytes());
         }
+        channel.close();
+        connection.close();
 
     }
 }

@@ -53,6 +53,7 @@ public class Procuder {
         channel.basicPublish(Consumer.EXCHANGE_NAME, Consumer.ROUTINGKEY_ERROR, true, null, (msg + Consumer.ROUTINGKEY_ERROR).getBytes());
         log.info("生产端{}发送：{}", Consumer.ROUTINGKEY_ERROR2, msg + Consumer.ROUTINGKEY_ERROR2);
         channel.basicPublish(Consumer.EXCHANGE_NAME, Consumer.ROUTINGKEY_ERROR2, false, null, (msg + Consumer.ROUTINGKEY_ERROR2).getBytes());
-
+        channel.close();
+        connection.close();
     }
 }
